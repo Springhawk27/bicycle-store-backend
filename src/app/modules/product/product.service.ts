@@ -15,7 +15,13 @@ const getAllProductFromDB = async () => {
   return result;
 };
 
+const getSingleProductFromDB = async (id: string) => {
+  const result = await Product.aggregate([{ $match: { id } }]);
+  return result;
+};
+
 export const ProductServices = {
   createProductIntoDB,
   getAllProductFromDB,
+  getSingleProductFromDB,
 };

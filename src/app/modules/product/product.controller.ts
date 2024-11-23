@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import { ProductServices } from './product.service';
 
@@ -13,7 +14,6 @@ const createProduct = async (req: Request, res: Response) => {
       message: 'Bicycle created succesfully',
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     res.status(500).json({
       success: false,
@@ -23,6 +23,7 @@ const createProduct = async (req: Request, res: Response) => {
   }
 };
 
+// get all products controller
 const getAllProduct = async (req: Request, res: Response) => {
   try {
     const result = await ProductServices.getAllProductFromDB();
@@ -32,7 +33,27 @@ const getAllProduct = async (req: Request, res: Response) => {
       message: 'Bicycles  retrieved succesfully',
       data: result,
     });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
+// get single product controller
+const getSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    const result = await ProductServices.getSingleProductFromDB(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle retrieved succesfully',
+      data: result,
+    });
   } catch (err: any) {
     res.status(500).json({
       success: false,
@@ -45,4 +66,5 @@ const getAllProduct = async (req: Request, res: Response) => {
 export const ProductControllers = {
   createProduct,
   getAllProduct,
+  getSingleProduct,
 };
