@@ -1,6 +1,7 @@
 import { Schema, model } from 'mongoose';
 import { ProductModel, TProduct } from './product.interface';
 
+// product schema
 const productSchema = new Schema<TProduct, ProductModel>(
   {
     id: {
@@ -53,4 +54,5 @@ productSchema.statics.isProductExists = async function (id: string) {
   return existingUser;
 };
 
+// product Model
 export const Product = model<TProduct, ProductModel>('Product', productSchema);
