@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
-import app from "./app";
-import config from "./config/index";
+import mongoose from 'mongoose';
+import config from './app/config';
+import app from './app';
 
 async function bootstrap() {
   try {

@@ -48,7 +48,7 @@ const productSchema = new Schema<TProduct, ProductModel>(
 );
 
 //custom static method
-productSchema.statics.isUserExists = async function (id: string) {
+productSchema.statics.isProductExists = async function (id: string) {
   const existingUser = await Product.findOne({ id });
   return existingUser;
 };
