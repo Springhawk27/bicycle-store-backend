@@ -42,6 +42,7 @@ const productSchema = new Schema<TProduct, ProductModel>(
     },
   },
   {
+    timestamps: true,
     toJSON: {
       virtuals: true,
     },

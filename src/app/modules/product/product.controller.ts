@@ -63,8 +63,56 @@ const getSingleProduct = async (req: Request, res: Response) => {
   }
 };
 
+// update product controller
+const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const updatedData = req.body;
+
+    const result = await ProductServices.updateProductFromDB(
+      productId,
+      updatedData,
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle updated succesfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
+// delete product controller
+const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+
+    const result = await ProductServices.deleteProductFromDB(productId);
+
+    res.status(200).json({
+      success: true,
+      message: 'Bicycle deleted succesfully',
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || 'something went wrong',
+      error: err,
+    });
+  }
+};
+
 export const ProductControllers = {
   createProduct,
   getAllProduct,
   getSingleProduct,
+  updateProduct,
+  deleteProduct,
 };
