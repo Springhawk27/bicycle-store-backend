@@ -25,17 +25,16 @@ const createOrderIntoDB = async (orderData: TOrder) => {
   orderData.totalPrice = quantity * isProductExists.price;
 
   // Create the order
-  const order = (await Order.create(orderData)).populate('product');
+  const order = await Order.create(orderData);
   return order;
 };
 
-
-
+// calculate total revenue service
 const calculateTotalRevenue = async () => {
   const result = await Order.aggregate([
     {
       $lookup: {
-        from: 'products', 
+        from: 'products',
         localField: 'product',
         foreignField: '_id',
         as: 'productDetails',
@@ -60,5 +59,5 @@ const calculateTotalRevenue = async () => {
 
 export const OrderServices = {
   createOrderIntoDB,
-  calculateTotalRevenue
+  calculateTotalRevenue,
 };

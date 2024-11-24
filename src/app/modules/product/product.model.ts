@@ -57,11 +57,5 @@ productSchema.pre('save', function (next) {
   next();
 });
 
-//custom static method
-productSchema.statics.isProductExists = async function (id: string) {
-  const existingUser = await Product.findOne({ id });
-  return existingUser;
-};
-
 // product Model
 export const Product = model<TProduct, ProductModel>('Product', productSchema);

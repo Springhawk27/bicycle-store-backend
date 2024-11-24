@@ -1,5 +1,6 @@
 import { Model } from 'mongoose';
 
+// product type
 export type TProduct = {
   id: string;
   name: string;
@@ -11,7 +12,4 @@ export type TProduct = {
   inStock: boolean;
 };
 
-export interface ProductModel extends Model<TProduct> {
-  // eslint-disable-next-line no-unused-vars
-  isProductExists(id: string): Promise<TProduct | null>;
-}
+export type ProductModel = Model<TProduct>;

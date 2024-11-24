@@ -3,23 +3,23 @@ import { Product } from './product.model';
 
 // create product service
 const createProductIntoDB = async (productData: TProduct) => {
-  if (await Product.isProductExists(productData.id)) {
-    throw new Error('Product already exists!');
-  }
   const result = await Product.create(productData);
   return result;
 };
 
+// get all products service
 const getAllProductFromDB = async () => {
   const result = await Product.find();
   return result;
 };
 
+// get single product service
 const getSingleProductFromDB = async (id: string) => {
   const result = await Product.aggregate([{ $match: { id } }]);
   return result;
 };
 
+// update product service
 const updateProductFromDB = async (
   id: string,
   updatedData: Partial<TProduct>,
@@ -28,6 +28,7 @@ const updateProductFromDB = async (
   return result;
 };
 
+// delete product service
 const deleteProductFromDB = async (id: string) => {
   const result = await Product.deleteOne({ id });
   return result;
