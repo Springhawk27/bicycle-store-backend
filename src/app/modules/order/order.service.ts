@@ -7,22 +7,22 @@ const createOrderIntoDB = async (orderData: TOrder) => {
   const { product, quantity } = orderData;
 
   // Check if product exists
-  const foundProduct = await Product.findById(product);
-  if (!foundProduct) {
+  const isProductExists = await Product.findById(product);
+  if (!isProductExists) {
     throw new Error('Product not found');
   }
 
   // Check stock availability
-  if (foundProduct.quantity < quantity) {
+  if (isProductExists.quantity < quantity) {
     throw new Error('Insufficient stock');
   }
 
   // Deduct quantity from product stock
-  foundProduct.quantity -= quantity;
-  await foundProduct.save();
+  isProductExists.quantity -= quantity;
+  await isProductExists.save();
 
   // Calculate total price
-  orderData.totalPrice = quantity * foundProduct.price;
+  orderData.totalPrice = quantity * isProductExists.price;
 
   // Create the order
   const order = (await Order.create(orderData)).populate('product');

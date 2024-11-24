@@ -20,6 +20,7 @@ const productSchema = new Schema<TProduct, ProductModel>(
     price: {
       type: Number,
       required: [true, 'Price is required'],
+      min: [0, 'Price must be non-negative'],
     },
     type: {
       type: String,
@@ -35,6 +36,7 @@ const productSchema = new Schema<TProduct, ProductModel>(
     quantity: {
       type: Number,
       required: [true, 'Quantity is required'],
+      min: [1, 'Quantity must be at least 1'],
     },
     inStock: {
       type: Boolean,
@@ -48,6 +50,12 @@ const productSchema = new Schema<TProduct, ProductModel>(
     },
   },
 );
+
+// Middleware to update `inStock` field based on quantity
+productSchema.pre('save', function (next) {
+  this.inStock = this.quantity > 0;
+  next();
+});
 
 //custom static method
 productSchema.statics.isProductExists = async function (id: string) {
