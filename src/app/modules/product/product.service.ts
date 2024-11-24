@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { TProduct } from './product.interface';
 import { Product } from './product.model';
 
@@ -14,23 +15,26 @@ const getAllProductFromDB = async () => {
 };
 
 // get single product service
-const getSingleProductFromDB = async (id: string) => {
-  const result = await Product.aggregate([{ $match: { id } }]);
+const getSingleProductFromDB = async (productId: string) => {
+  const objectId = new Types.ObjectId(productId);
+  const result = await Product.aggregate([{ $match: { _id: objectId } }]);
   return result;
 };
 
 // update product service
 const updateProductFromDB = async (
-  id: string,
+  productId: string,
   updatedData: Partial<TProduct>,
 ) => {
-  const result = await Product.findOneAndUpdate({ id }, updatedData);
+  const result = await Product.findByIdAndUpdate(productId, updatedData, {
+    new: true,
+  });
   return result;
 };
 
 // delete product service
-const deleteProductFromDB = async (id: string) => {
-  const result = await Product.deleteOne({ id });
+const deleteProductFromDB = async (productId: string) => {
+  const result = await Product.findByIdAndDelete(productId);
   return result;
 };
 
