@@ -14,13 +14,14 @@ const getAllProductFromDB = async (searchTerm?: string) => {
   const filter: any = {};
   if (searchTerm) {
     filter.$or = [
-      { name: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive
+      { name: { $regex: searchTerm, $options: 'i' } }, // $options: 'i' for  Case-insensitive
       { brand: { $regex: searchTerm, $options: 'i' } },
       { type: { $regex: searchTerm, $options: 'i' } },
     ];
   }
 
   const result = await Product.find(filter);
+
   return result;
 };
 
@@ -44,8 +45,11 @@ const updateProductFromDB = async (
 
 // delete product service
 const deleteProductFromDB = async (productId: string) => {
-  const result = await Product.findByIdAndDelete(productId);
-  return result;
+  const result = await Product.deleteOne({ _id: productId });
+  if (result.deletedCount === 1) {
+    return {};
+  }
+  throw new Error('Product not found');
 };
 
 export const ProductServices = {

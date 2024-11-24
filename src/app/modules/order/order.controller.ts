@@ -10,14 +10,14 @@ const createOrder = async (req: Request, res: Response) => {
     const result = await OrderServices.createOrderIntoDB(orderData);
 
     res.status(201).json({
-      success: true,
       message: 'Order created successfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'Something went wrong',
+      success: false,
       error: err,
     });
   }
