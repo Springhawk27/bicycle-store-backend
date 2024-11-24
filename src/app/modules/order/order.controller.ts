@@ -23,6 +23,27 @@ const createOrder = async (req: Request, res: Response) => {
   }
 };
 
+const calculateRevenue = async (req: Request, res: Response) => {
+  try {
+    const totalRevenue = await OrderServices.calculateTotalRevenue();
+
+    res.status(200).json({
+      message: 'Revenue calculated successfully',
+      status: true,
+      data: {
+        totalRevenue,
+      },
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      message: err.message || 'Something went wrong',
+      status: false,
+      error: err,
+    });
+  }
+};
+
 export const OrderControllers = {
   createOrder,
+  calculateRevenue,
 };
