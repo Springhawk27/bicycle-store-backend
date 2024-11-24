@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Types } from 'mongoose';
 import { TProduct } from './product.interface';
 import { Product } from './product.model';
@@ -9,8 +10,17 @@ const createProductIntoDB = async (productData: TProduct) => {
 };
 
 // get all products service
-const getAllProductFromDB = async () => {
-  const result = await Product.find();
+const getAllProductFromDB = async (searchTerm?: string) => {
+  const filter: any = {};
+  if (searchTerm) {
+    filter.$or = [
+      { name: { $regex: searchTerm, $options: 'i' } }, // Case-insensitive
+      { brand: { $regex: searchTerm, $options: 'i' } },
+      { type: { $regex: searchTerm, $options: 'i' } },
+    ];
+  }
+
+  const result = await Product.find(filter);
   return result;
 };
 

@@ -4,11 +4,6 @@ import { ProductModel, TProduct } from './product.interface';
 // product schema
 const productSchema = new Schema<TProduct, ProductModel>(
   {
-    id: {
-      type: String,
-      required: [true, 'ID is required'],
-      unique: true,
-    },
     name: {
       type: String,
       required: [true, 'Name is required'],

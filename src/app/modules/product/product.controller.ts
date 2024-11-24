@@ -9,14 +9,14 @@ const createProduct = async (req: Request, res: Response) => {
     const result = await ProductServices.createProductIntoDB(productData);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle created succesfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'Something went wrong',
+      success: false,
       error: err,
     });
   }
@@ -25,17 +25,21 @@ const createProduct = async (req: Request, res: Response) => {
 // get all products controller
 const getAllProduct = async (req: Request, res: Response) => {
   try {
-    const result = await ProductServices.getAllProductFromDB();
+    const { searchTerm } = req.query;
+
+    const result = await ProductServices.getAllProductFromDB(
+      searchTerm as string,
+    );
 
     res.status(200).json({
-      success: true,
       message: 'Bicycles  retrieved succesfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'something went wrong',
+      success: false,
       error: err,
     });
   }
@@ -49,14 +53,14 @@ const getSingleProduct = async (req: Request, res: Response) => {
     const result = await ProductServices.getSingleProductFromDB(productId);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle retrieved succesfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'something went wrong',
+      success: false,
       error: err,
     });
   }
@@ -74,14 +78,14 @@ const updateProduct = async (req: Request, res: Response) => {
     );
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle updated succesfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'something went wrong',
+      success: false,
       error: err,
     });
   }
@@ -95,14 +99,14 @@ const deleteProduct = async (req: Request, res: Response) => {
     const result = await ProductServices.deleteProductFromDB(productId);
 
     res.status(200).json({
-      success: true,
       message: 'Bicycle deleted succesfully',
+      success: true,
       data: result,
     });
   } catch (err: any) {
     res.status(500).json({
-      success: false,
       message: err.message || 'something went wrong',
+      success: false,
       error: err,
     });
   }
