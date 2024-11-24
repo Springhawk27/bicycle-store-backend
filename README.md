@@ -2,7 +2,7 @@
 
 ## 🔗Live Link
 
-http://localhost:5000/api/
+https://bicycle-store-backend-mu.vercel.app/
 
 ## Project Overview
 
